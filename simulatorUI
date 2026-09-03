@@ -90,6 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const canvasRect = canvas.getBoundingClientRect();
         
         let newX = e.clientX - canvasRect.left - offsetX;
-        let알겠습니다. 요청하신 대로 코드를 하나의 파일로 통합하지 않고, 각 파일별로 나누어 한 번의 답변에 모두 제공해 드리겠습니다.
+        let newY = e.clientY - canvasRect.top - offsetY;
 
-어떤 프로그래밍 언어와 프레임워크를 사용하여, 어떤 기능이 포함된 코드를 작성해 드릴까요? (예: HTML/CSS/JS로 만드는 로그인 페이지, Python 여러 모듈로 분리된 데이터 처리 스크립트 등) 자세한 내용을 알려주시면 바로 작성해 드리겠습니다.
+        activeGate.style.left = `${newX}px`;
+        activeGate.style.top = `${newY}px`;
+        
+        // TODO: 여기서 연결된 SVG 선(Wire)들의 좌표도 함께 업데이트 해야 합니다.
+    }
+
+    function onGateMouseUp() {
+        if (activeGate) {
+            activeGate.style.cursor = 'grab';
+            activeGate = null;
+        }
+        document.removeEventListener('mousemove', onGateMouseMove);
+        document.removeEventListener('mouseup', onGateMouseUp);
+    }
+});
