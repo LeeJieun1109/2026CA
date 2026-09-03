@@ -1,0 +1,95 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('circuit-canvas');
+    const gateLayer = document.getElementById('gate-layer');
+    const gateItems = document.querySelectorAll('.gate-item'); 
+    
+    let draggedGateType = null; 
+    let activeGate = null; 
+    let offsetX = 0, offsetY = 0;
+
+    gateItems.forEach(item => {
+        item.setAttribute('draggable', 'true');
+        item.addEventListener('dragstart', (e) => {
+            draggedGateType = e.target.querySelector('span').innerText;
+            e.dataTransfer.setData('text/plain', draggedGateType);
+        });
+    });
+
+    canvas.addEventListener('dragover', (e) => e.preventDefault());
+
+    canvas.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (!draggedGateType) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        createGateOnCanvas(draggedGateType, x, y);
+        draggedGateType = null; 
+    });
+
+    function createGateOnCanvas(type, x, y) {
+        const gateNode = document.createElement('div');
+        gateNode.className = 'canvas-gate';
+        gateNode.innerText = type;
+        
+        gateNode.style.position = 'absolute';
+        gateNode.style.left = `${x - 30}px`; 
+        gateNode.style.top = `${y - 20}px`;
+        gateNode.style.width = '60px';
+        gateNode.style.height = '40px';
+        gateNode.style.backgroundColor = '#1b263b';
+        gateNode.style.color = 'white';
+        gateNode.style.display = 'flex';
+        gateNode.style.alignItems = 'center';
+        gateNode.style.justifyContent = 'center';
+        gateNode.style.borderRadius = '8px';
+        gateNode.style.cursor = 'grab';
+        gateNode.style.userSelect = 'none';
+
+        addPorts(gateNode, type);
+        gateNode.addEventListener('mousedown', onGateMouseDown);
+        gateLayer.appendChild(gateNode);
+    }
+
+    function addPorts(gateNode, type) {
+        const in1 = document.createElement('div');
+        in1.className = 'port port-in';
+        in1.style.cssText = 'position:absolute; left:-5px; top:8px; width:10px; height:10px; background:#4a90e2; border-radius:50%;';
+        
+        const in2 = document.createElement('div');
+        in2.className = 'port port-in';
+        in2.style.cssText = 'position:absolute; left:-5px; bottom:8px; width:10px; height:10px; background:#4a90e2; border-radius:50%;';
+        
+        const out1 = document.createElement('div');
+        out1.className = 'port port-out';
+        out1.style.cssText = 'position:absolute; right:-5px; top:15px; width:10px; height:10px; background:#f5a623; border-radius:50%;';
+
+        gateNode.appendChild(in1);
+        gateNode.appendChild(in2);
+        gateNode.appendChild(out1);
+    }
+
+    function onGateMouseDown(e) {
+        if(e.target.classList.contains('port')) return; 
+
+        activeGate = e.currentTarget;
+        activeGate.style.cursor = 'grabbing';
+        
+        const rect = activeGate.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+
+        document.addEventListener('mousemove', onGateMouseMove);
+        document.addEventListener('mouseup', onGateMouseUp);
+    }
+
+    function onGateMouseMove(e) {
+        if (!activeGate) return;
+        const canvasRect = canvas.getBoundingClientRect();
+        
+        let newX = e.clientX - canvasRect.left - offsetX;
+        let알겠습니다. 요청하신 대로 코드를 하나의 파일로 통합하지 않고, 각 파일별로 나누어 한 번의 답변에 모두 제공해 드리겠습니다.
+
+어떤 프로그래밍 언어와 프레임워크를 사용하여, 어떤 기능이 포함된 코드를 작성해 드릴까요? (예: HTML/CSS/JS로 만드는 로그인 페이지, Python 여러 모듈로 분리된 데이터 처리 스크립트 등) 자세한 내용을 알려주시면 바로 작성해 드리겠습니다.
